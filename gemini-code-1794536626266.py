@@ -4,8 +4,8 @@ import plotly.express as px
 from datetime import datetime
 
 # --- 1. CONFIGURACIÓN DE LA PÁGINA ---
-st.set_page_config(page_title="Simulador de Aduanas", page_icon="🚢", layout="wide")
-st.title("Simulador Operativo de Nacionalización 🚢")
+st.set_page_config(page_title="Simulador de Desaduanamiento de carga courier de importación", page_icon="🚢", layout="wide")
+st.title("Simulador Operativo de Desaduanamiento Courier 🚢")
 st.markdown("Dashboard interactivo con cálculo multicapa (Específicos -> Generales -> KPIs)")
 
 # --- 2. PANEL LATERAL (INPUTS) ---
