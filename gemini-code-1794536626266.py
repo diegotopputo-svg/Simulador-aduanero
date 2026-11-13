@@ -58,7 +58,7 @@ datos_especificos = [
     {"Etapa": "Día del vuelo", "Actividad": "Registrar DUA Documento", "Op": 1, "Setup": 178.26, "TE_u": 0, "Mod": 1},
     {"Etapa": "Día del vuelo", "Actividad": "Pago de impuestos", "Op": 1, "Setup": 4635.13, "TE_u": 0, "Mod": 1},
     {"Etapa": "Día del vuelo", "Actividad": "Inspección del SENIAT", "Op": 1, "Setup": 0, "TE_u": 7.40, "Mod": 1},
-    {"Etapa": "Día del vuelo", "Actividad": "Cargar camión", "Op": op_ges, "Setup": 0, "TE_u": 14.81, "Mod": 1},
+    {"Etapa": "Día del vuelo", "Actividad": "Cargar camión", "Op": op_aux, "Setup": 0, "TE_u": 14.81, "Mod": 1},
     # Día Siguiente
     {"Etapa": "Día siguiente al vuelo", "Actividad": "Validación del pago de imp.", "Op": op_ges, "Setup": 0, "TE_u": 275.81, "Mod": 1},
     {"Etapa": "Día siguiente al vuelo", "Actividad": "Envío de factura digital", "Op": op_fac, "Setup": 0, "TE_u": 16.85, "Mod": 1},
