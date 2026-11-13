@@ -8,9 +8,6 @@ st.set_page_config(page_title="Simulador de Desaduanamiento de carga courier de 
 st.title("Simulador Operativo de Desaduanamiento Courier ✈️")
 
 # --- 2. PANEL LATERAL (INPUTS) ---
-st.sidebar.header("⚙️ Parámetros")
-cant_guias = st.sidebar.number_input("Cantidad de Guías a procesar", min_value=1, value=707, step=10)
-
 st.sidebar.header("⚙️ Parámetros de Carga")
 cant_guias = st.sidebar.number_input("Cantidad de Guías a procesar", min_value=1, value=707, step=10)
 # --- NUEVO INPUT DE PAQUETES ---
