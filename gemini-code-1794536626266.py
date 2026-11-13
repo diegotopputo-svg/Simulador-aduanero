@@ -21,7 +21,7 @@ col_op1, col_op2 = st.sidebar.columns(2)
 op_val = col_op1.number_input("Valoradores", min_value=1, value=6)
 op_aux = col_op2.number_input("Auxiliares OPS", min_value=1, value=5)
 op_ges = col_op1.number_input("Gestores", min_value=1, value=2)
-op_fac = col_op2.number_input("Facturadores", min_value=1, value=2)
+op_fac = col_op2.number_input("Facturadores", min_value=1, value=1)
 
 st.sidebar.header("🕒 Horarios")
 hora_inicio = st.sidebar.time_input("Hora inicio jornada", value=pd.to_datetime("08:00").time())
