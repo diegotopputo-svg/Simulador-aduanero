@@ -52,13 +52,13 @@ datos_especificos = [
     # Día del Vuelo
     {"Etapa": "Día del vuelo", "Actividad": "Aterrizaje", "Op": 1, "Setup": 5400, "TE_u": 0, "Mod": 1},
     {"Etapa": "Día del vuelo", "Actividad": "Checkpoint", "Op": 1, "Setup": 300, "TE_u": 8.16, "Mod": 1},
-    {"Etapa": "Día del vuelo", "Actividad": "Descarga ULD", "Op": max(1, op_aux - 1), "Setup": 0, "TE_u": 6.16, "Mod": 1},
+    {"Etapa": "Día del vuelo", "Actividad": "Descarga ULD", "Op": op_aux - 1, "Setup": 0, "TE_u": 6.16, "Mod": 1},
     {"Etapa": "Día del vuelo", "Actividad": "Registrar DUA Anexo A", "Op": 1, "Setup": 120, "TE_u": 1.14, "Mod": 1}, 
     {"Etapa": "Día del vuelo", "Actividad": "Registrar DUA Anexo B", "Op": 1, "Setup": 120, "TE_u": 1.38, "Mod": 1},
     {"Etapa": "Día del vuelo", "Actividad": "Registrar DUA Documento", "Op": 1, "Setup": 178.26, "TE_u": 0, "Mod": 1},
     {"Etapa": "Día del vuelo", "Actividad": "Pago de impuestos", "Op": 1, "Setup": 4635.13, "TE_u": 0, "Mod": 1},
     {"Etapa": "Día del vuelo", "Actividad": "Inspección del SENIAT", "Op": 1, "Setup": 0, "TE_u": 7.40, "Mod": 1},
-    {"Etapa": "Día del vuelo", "Actividad": "Cargar camión", "Op": op_aux, "Setup": 0, "TE_u": 14.81, "Mod": 1},
+    {"Etapa": "Día del vuelo", "Actividad": "Cargar camión", "Op": 2, "Setup": 0, "TE_u": 14.81, "Mod": 1},
     # Día Siguiente
     {"Etapa": "Día siguiente al vuelo", "Actividad": "Validación del pago de imp.", "Op": op_ges, "Setup": 0, "TE_u": 275.81, "Mod": 1},
     {"Etapa": "Día siguiente al vuelo", "Actividad": "Envío de factura digital", "Op": op_fac, "Setup": 0, "TE_u": 16.85, "Mod": 1},
