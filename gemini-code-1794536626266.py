@@ -59,8 +59,8 @@ datos_especificos = [
     {"Etapa": "Día del vuelo", "Actividad": "Inspección del SENIAT", "Op": 1, "Setup": 0, "TE_u": 7.40, "Mod": 1},
     {"Etapa": "Día del vuelo", "Actividad": "Cargar camión", "Op": op_ges, "Setup": 0, "TE_u": 14.81, "Mod": 1},
     # Día Siguiente
-    {"Etapa": "Día siguiente al vuelo", "Actividad": "Validación del pago de imp.", "Op": op_fac, "Setup": 0, "TE_u": 275.81, "Mod": 1},
-    {"Etapa": "Día siguiente al vuelo", "Actividad": "Envío de factura digital", "Op": 1, "Setup": 0, "TE_u": 16.85, "Mod": 1},
+    {"Etapa": "Día siguiente al vuelo", "Actividad": "Validación del pago de imp.", "Op": op_ges, "Setup": 0, "TE_u": 275.81, "Mod": 1},
+    {"Etapa": "Día siguiente al vuelo", "Actividad": "Envío de factura digital", "Op": op_fac, "Setup": 0, "TE_u": 16.85, "Mod": 1},
 ]
 
 df_esp = pd.DataFrame(datos_especificos)
