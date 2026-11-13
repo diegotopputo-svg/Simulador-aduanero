@@ -116,6 +116,28 @@ lt_vuelo, cap_vuelo = calc_kpi("Día del vuelo")
 lt_sig, cap_sig = calc_kpi("Día siguiente al vuelo", factor_guias=pct_b) # Solo aplica a proporción Anexo B
 
 
+from datetime import datetime, timedelta
+
+# 1. Definición de la función (DEBE ir antes de las columnas del dashboard)
+def calcular_fin_estimado(hora_base, lead_time_hrs, descanso_hrs, hora_limite):
+    # Combinar fecha actual con la hora para poder calcular
+    dt_base = datetime.combine(datetime.today(), hora_base)
+    # Sumar Lead Time y tiempo de descanso
+    dt_fin = dt_base + timedelta(hours=lead_time_hrs + descanso_hrs)
+    
+    # Formatear a texto con AM/PM
+    hora_str = dt_fin.strftime("%I:%M %p")
+    
+    # Comparar con la hora de finalización de jornada
+    dt_limite = datetime.combine(datetime.today(), hora_limite)
+    
+    # Lógica de colores (verde claro si cumple, rojo claro si se pasa)
+    bg_color = "#d4edda" if dt_fin <= dt_limite else "#f8d7da"
+    txt_color = "#155724" if dt_fin <= dt_limite else "#721c24"
+    
+    return f'<div style="background-color: {bg_color}; color: {txt_color}; padding: 10px; border-radius: 8px; text-align: center; margin-top: 10px; font-size: 15px;"><b>Fin estimado:</b> {hora_str}</div>'
+
+
 # --- 4. DASHBOARD MINIMALISTA (UI) ---
 st.markdown("### 📊 Indicadores Clave de Rendimiento (KPIs)")
 col1, col2, col3 = st.columns(3)
@@ -133,7 +155,7 @@ with col2:
     st.markdown(calcular_fin_estimado(hora_vuelo, lt_vuelo, horas_descanso, hora_fin), unsafe_allow_html=True)
 
 with col3:
-    st.success("📄 **DÍA SIGUIENTE AL VUELO (Tipo B)**")
+    st.success("📄 **DÍA SIGUIENTE (Anexo B)**")
     st.metric("Lead Time Estimado", f"{lt_sig:.2f} hrs")
     st.metric("Capacidad Máxima", f"{cap_sig} guías")
     st.markdown(calcular_fin_estimado(hora_inicio, lt_sig, horas_descanso, hora_fin), unsafe_allow_html=True)
