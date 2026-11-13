@@ -11,6 +11,11 @@ st.title("Simulador Operativo de Desaduanamiento Courier ✈️")
 st.sidebar.header("⚙️ Parámetros")
 cant_guias = st.sidebar.number_input("Cantidad de Guías a procesar", min_value=1, value=707, step=10)
 
+st.sidebar.header("⚙️ Parámetros de Carga")
+cant_guias = st.sidebar.number_input("Cantidad de Guías a procesar", min_value=1, value=707, step=10)
+# --- NUEVO INPUT DE PAQUETES ---
+cant_paquetes = st.sidebar.number_input("Cantidad de Paquetes a procesar", min_value=1, value=1500, step=50)
+
 col_a, col_b = st.sidebar.columns(2)
 pct_a = col_a.number_input("% Tipo A", min_value=0.0, max_value=100.0, value=70.0) / 100
 pct_b = col_b.number_input("% Tipo B", min_value=0.0, max_value=100.0, value=30.0) / 100
@@ -89,33 +94,30 @@ df_gen = pd.DataFrame(datos_generales)
 def calc_kpi(etapa, factor_guias=1.0):
     df_filtrado = df_gen[df_gen["Etapa"] == etapa]
     t_fijo = df_filtrado["Setup Real (s)"].sum()
-    te = df_filtrado["TE Real Acum (s)"].sum()
-    cap = int((t_disp_seg - t_fijo) / te) if te > 0 else 0
-    lt = (t_fijo + (te * (cant_guias * factor_guias))) / 3600
+    
+    # Identificar las actividades agrupadas de Capa 2 que dependen de paquetes
+    actividades_paquetes = ["Recepción y descarga ULD", "Liberación aduanal"]
+    
+    # Separar el TE (Tiempo Estándar) por tipo de dependencia
+    te_paquetes = df_filtrado[df_filtrado["Actividad"].isin(actividades_paquetes)]["TE Real Acum (s)"].sum()
+    te_guias = df_filtrado[~df_filtrado["Actividad"].isin(actividades_paquetes)]["TE Real Acum (s)"].sum()
+    
+    # Cálculo del Lead Time (separando la multiplicación de guías y paquetes)
+    tiempo_variable_guias = te_guias * (cant_guias * factor_guias)
+    tiempo_variable_paquetes = te_paquetes * cant_paquetes
+    lt = (t_fijo + tiempo_variable_guias + tiempo_variable_paquetes) / 3600
+    
+    # Cálculo de Capacidad Máxima (en guías, utilizando una proporción paquetes/guías)
+    ratio_paquetes_guia = cant_paquetes / cant_guias if cant_guias > 0 else 1
+    te_ponderado = te_guias + (te_paquetes * ratio_paquetes_guia)
+    cap = int((t_disp_seg - t_fijo) / te_ponderado) if te_ponderado > 0 else 0
+    
     return lt, cap
 
 lt_previo, cap_previo = calc_kpi("Día previo al vuelo")
 lt_vuelo, cap_vuelo = calc_kpi("Día del vuelo")
 lt_sig, cap_sig = calc_kpi("Día siguiente al vuelo", factor_guias=pct_b) # Solo aplica a proporción Anexo B
 
-
-def calcular_fin_estimado(hora_base, lead_time_hrs, descanso_hrs, hora_limite):
-    # Combinar fecha actual con la hora para poder calcular
-    dt_base = datetime.combine(datetime.today(), hora_base)
-    # Sumar Lead Time y tiempo de descanso
-    dt_fin = dt_base + timedelta(hours=lead_time_hrs + descanso_hrs)
-    
-    # Formatear a texto con AM/PM
-    hora_str = dt_fin.strftime("%I:%M %p")
-    
-    # Comparar con la hora de finalización de jornada
-    dt_limite = datetime.combine(datetime.today(), hora_limite)
-    
-    # Lógica de colores (verde claro si cumple, rojo claro si se pasa)
-    bg_color = "#d4edda" if dt_fin <= dt_limite else "#f8d7da"
-    txt_color = "#155724" if dt_fin <= dt_limite else "#721c24"
-    
-    return f'<div style="background-color: {bg_color}; color: {txt_color}; padding: 10px; border-radius: 8px; text-align: center; margin-top: 10px; font-size: 15px;"><b>Fin estimado:</b> {hora_str}</div>'
 
 # --- 4. DASHBOARD MINIMALISTA (UI) ---
 st.markdown("### 📊 Indicadores Clave de Rendimiento (KPIs)")
