@@ -98,7 +98,6 @@ lt_previo, cap_previo = calc_kpi("Día previo al vuelo")
 lt_vuelo, cap_vuelo = calc_kpi("Día del vuelo")
 lt_sig, cap_sig = calc_kpi("Día siguiente al vuelo", factor_guias=pct_b) # Solo aplica a proporción Anexo B
 
------
 
 def calcular_fin_estimado(hora_base, lead_time_hrs, descanso_hrs, hora_limite):
     # Combinar fecha actual con la hora para poder calcular
