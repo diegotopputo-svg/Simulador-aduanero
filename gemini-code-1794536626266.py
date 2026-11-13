@@ -106,7 +106,7 @@ def calc_kpi(etapa, factor_guias=1.0):
     
     # Cálculo de Capacidad Máxima (en guías, utilizando una proporción paquetes/guías)
     ratio_paquetes_guia = cant_paquetes / cant_guias if cant_guias > 0 else 1
-    te_ponderado = te_guias + (te_paquetes * ratio_paquetes_guia)
+    te_ponderado = te_guias + (te_paquetes)
     cap = int((t_disp_seg - t_fijo) / te_ponderado) if te_ponderado > 0 else 0
     
     return lt, cap
