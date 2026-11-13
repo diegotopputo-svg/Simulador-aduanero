@@ -1,7 +1,7 @@
-import streamlit as st
+import streamlit as st 
 import pandas as pd
 import plotly.express as px
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # --- 1. CONFIGURACIÓN DE LA PÁGINA ---
 st.set_page_config(page_title="Simulador de Desaduanamiento de carga courier de importación", page_icon="🚢", layout="wide")
@@ -101,6 +101,27 @@ lt_sig, cap_sig = calc_kpi("Día siguiente al vuelo", factor_guias=pct_b) # Solo
 
 
 # --- 4. DASHBOARD MINIMALISTA (UI) ---
+# (Asegúrate de tener esta importación al inicio de tu app.py: from datetime import datetime, timedelta)
+
+# Función auxiliar para calcular la hora de fin y aplicar el formato de color
+def render_hora_fin(hora_arranque, lt_horas, hora_limite):
+    dt_arranque = datetime.combine(datetime.today(), hora_arranque)
+    dt_fin = dt_arranque + timedelta(hours=lt_horas)
+    dt_limite = datetime.combine(datetime.today(), hora_limite)
+    
+    hora_fin_str = dt_fin.strftime("%H:%M")
+    
+    # Lógica de colores según el Google Sheets (verde claro si cumple, rojo claro si excede)
+    if dt_fin <= dt_limite:
+        bg_color = "#d4edda" # Verde claro
+        txt_color = "#155724"
+    else:
+        bg_color = "#f8d7da" # Rojo claro
+        txt_color = "#721c24"
+        
+    return f'<div style="background-color: {bg_color}; color: {txt_color}; padding: 8px; border-radius: 5px; text-align: center; font-weight: bold; margin-top: 10px;">Fin Estimado: {hora_fin_str}</div>'
+
+# --- 4. DASHBOARD MINIMALISTA (UI) ---
 st.markdown("### 📊 Indicadores Clave de Rendimiento (KPIs)")
 col1, col2, col3 = st.columns(3)
 
@@ -108,18 +129,25 @@ with col1:
     st.info("📦 **DÍA PREVIO AL VUELO**")
     st.metric("Lead Time Estimado", f"{lt_previo:.2f} hrs")
     st.metric("Capacidad Máxima", f"{cap_previo} guías")
+    # Usa hora_transferencia o hora_inicio como base
+    st.markdown(render_hora_fin(hora_inicio, lt_previo, hora_fin), unsafe_allow_html=True)
 
 with col2:
     st.warning("✈️ **DÍA DEL VUELO**")
     st.metric("Lead Time Estimado", f"{lt_vuelo:.2f} hrs")
     st.metric("Capacidad Máxima", f"{cap_vuelo} guías")
+    # Usa la hora_vuelo como base para el inicio de esta etapa
+    st.markdown(render_hora_fin(hora_vuelo, lt_vuelo, hora_fin), unsafe_allow_html=True)
 
 with col3:
-    st.success("📄 **DÍA SIGUIENTE (Anexo B)**")
+    st.success("📄 **DÍA SIGUIENTE AL VUELO (Tipo B)**")
     st.metric("Lead Time Estimado", f"{lt_sig:.2f} hrs")
     st.metric("Capacidad Máxima", f"{cap_sig} guías")
+    # Usa la hora_inicio para el día administrativo
+    st.markdown(render_hora_fin(hora_inicio, lt_sig, hora_fin), unsafe_allow_html=True)
 
 st.markdown("---")
+
 
 # --- 5. GRÁFICO ---
 st.markdown("### ⏱️ Proporción de Tiempo Dedicado por Etapa")
