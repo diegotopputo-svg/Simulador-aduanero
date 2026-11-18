@@ -4,8 +4,8 @@ import plotly.express as px
 from datetime import datetime, timedelta
 
 # --- 1. CONFIGURACIÓN DE LA PÁGINA ---
-st.set_page_config(page_title="Simulador de Tiempos de Desaduanamiento de carga courier de importación", page_icon="✈️", layout="wide")
-st.title("Simulador Operativo de Desaduanamiento Courier ✈️")
+st.set_page_config(page_title="Simulador de Tiempos de Desaduanamiento de Carga Courier de Importación", page_icon="✈️", layout="wide")
+st.title("Simulador de Tiempos de Desaduanamiento de Carga Courier de Importación ✈️")
 
 # --- 2. PANEL LATERAL (INPUTS) ---
 st.sidebar.header("⚙️ Parámetros de Carga")
