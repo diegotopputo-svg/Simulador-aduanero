@@ -43,18 +43,18 @@ datos_especificos = [
     # Día Previo
     {"Etapa": "Día previo al vuelo", "Actividad": "Transferencia", "Op": 1, "Setup": 0, "TE_u": 2.63, "Mod": 1},
     {"Etapa": "Día previo al vuelo", "Actividad": "Depuración", "Op": op_aux, "Setup": 63.48, "TE_u": 10.18, "Mod": 1},
-    {"Etapa": "Día previo al vuelo", "Actividad": "Adicional (Dep. Anexo C)", "Op": 1, "Setup": 0, "TE_u": 0.86, "Mod": 1},
+    {"Etapa": "Día previo al vuelo", "Actividad": "Adicional (Dep. Tipo C)", "Op": 1, "Setup": 0, "TE_u": 0.86, "Mod": 1},
     {"Etapa": "Día previo al vuelo", "Actividad": "Clasificación aran. (A)", "Op": max(1, op_val // 2), "Setup": 0, "TE_u": 33.85, "Mod": pct_a},
     {"Etapa": "Día previo al vuelo", "Actividad": "Clasificación aran. (B)", "Op": max(1, op_val - (op_val // 2)), "Setup": 0, "TE_u": 40.18, "Mod": pct_b},
-    {"Etapa": "Día previo al vuelo", "Actividad": "Registrar DAI Anexo A", "Op": 1, "Setup": 118.74, "TE_u": 0.87, "Mod": pct_a},
-    {"Etapa": "Día previo al vuelo", "Actividad": "Registrar DAI Anexo B", "Op": 1, "Setup": 118.74, "TE_u": 0.73, "Mod": pct_b},
+    {"Etapa": "Día previo al vuelo", "Actividad": "Registrar DAI Tipo A", "Op": 1, "Setup": 118.74, "TE_u": 0.87, "Mod": pct_a},
+    {"Etapa": "Día previo al vuelo", "Actividad": "Registrar DAI Tipo B", "Op": 1, "Setup": 118.74, "TE_u": 0.73, "Mod": pct_b},
     {"Etapa": "Día previo al vuelo", "Actividad": "Registrar DAI Documento", "Op": 1, "Setup": 118.74, "TE_u": 0, "Mod": 1},
     # Día del Vuelo
     {"Etapa": "Día del vuelo", "Actividad": "Aterrizaje", "Op": 1, "Setup": 5400, "TE_u": 0, "Mod": 1},
     {"Etapa": "Día del vuelo", "Actividad": "Checkpoint", "Op": 1, "Setup": 300, "TE_u": 8.16, "Mod": 1},
     {"Etapa": "Día del vuelo", "Actividad": "Descarga ULD", "Op": op_aux - 1, "Setup": 0, "TE_u": 6.16, "Mod": 1},
-    {"Etapa": "Día del vuelo", "Actividad": "Registrar DUA Anexo A", "Op": 1, "Setup": 120, "TE_u": 1.14, "Mod": 1}, 
-    {"Etapa": "Día del vuelo", "Actividad": "Registrar DUA Anexo B", "Op": 1, "Setup": 120, "TE_u": 1.38, "Mod": 1},
+    {"Etapa": "Día del vuelo", "Actividad": "Registrar DUA Tipo A", "Op": 1, "Setup": 120, "TE_u": 1.14, "Mod": 1}, 
+    {"Etapa": "Día del vuelo", "Actividad": "Registrar DUA Tipo B", "Op": 1, "Setup": 120, "TE_u": 1.38, "Mod": 1},
     {"Etapa": "Día del vuelo", "Actividad": "Registrar DUA Documento", "Op": 1, "Setup": 178.26, "TE_u": 0, "Mod": 1},
     {"Etapa": "Día del vuelo", "Actividad": "Pago de impuestos", "Op": 1, "Setup": 4635.13, "TE_u": 0, "Mod": 1},
     {"Etapa": "Día del vuelo", "Actividad": "Inspección del SENIAT", "Op": 1, "Setup": 0, "TE_u": 7.40, "Mod": 1},
@@ -75,12 +75,12 @@ def agrupar_tiempos(actividades, metodo="sum"):
     if metodo == "max": return sub["Setup Real (s)"].max(), sub["TE Real (s)"].max()
 
 datos_generales = [
-    {"Etapa": "Día previo al vuelo", "Actividad": "Totalización", **dict(zip(['Setup Real (s)', 'TE Real Acum (s)'], agrupar_tiempos(["Transferencia", "Depuración", "Adicional (Dep. Anexo C)"], "sum")))},
+    {"Etapa": "Día previo al vuelo", "Actividad": "Totalización", **dict(zip(['Setup Real (s)', 'TE Real Acum (s)'], agrupar_tiempos(["Transferencia", "Depuración", "Adicional (Dep. Tipo C)"], "sum")))},
     {"Etapa": "Día previo al vuelo", "Actividad": "Clasificación arancelaria", **dict(zip(['Setup Real (s)', 'TE Real Acum (s)'], agrupar_tiempos(["Clasificación aran. (A)", "Clasificación aran. (B)"], "max")))},
-    {"Etapa": "Día previo al vuelo", "Actividad": "Registrar DAI", **dict(zip(['Setup Real (s)', 'TE Real Acum (s)'], agrupar_tiempos(["Registrar DAI Anexo A", "Registrar DAI Anexo B", "Registrar DAI Documento"], "max")))},
+    {"Etapa": "Día previo al vuelo", "Actividad": "Registrar DAI", **dict(zip(['Setup Real (s)', 'TE Real Acum (s)'], agrupar_tiempos(["Registrar DAI Tipo A", "Registrar DAI Tipo B", "Registrar DAI Documento"], "max")))},
     {"Etapa": "Día del vuelo", "Actividad": "Aterrizaje", **dict(zip(['Setup Real (s)', 'TE Real Acum (s)'], agrupar_tiempos(["Aterrizaje"], "sum")))},
     {"Etapa": "Día del vuelo", "Actividad": "Recepción y descarga ULD", **dict(zip(['Setup Real (s)', 'TE Real Acum (s)'], agrupar_tiempos(["Checkpoint", "Descarga ULD"], "sum")))},
-    {"Etapa": "Día del vuelo", "Actividad": "Registrar DUA", **dict(zip(['Setup Real (s)', 'TE Real Acum (s)'], agrupar_tiempos(["Registrar DUA Anexo A", "Registrar DUA Anexo B", "Registrar DUA Documento"], "max")))},
+    {"Etapa": "Día del vuelo", "Actividad": "Registrar DUA", **dict(zip(['Setup Real (s)', 'TE Real Acum (s)'], agrupar_tiempos(["Registrar DUA Tipo A", "Registrar DUA Tipo B", "Registrar DUA Documento"], "max")))},
     {"Etapa": "Día del vuelo", "Actividad": "Pago de impuestos", **dict(zip(['Setup Real (s)', 'TE Real Acum (s)'], agrupar_tiempos(["Pago de impuestos"], "sum")))},
     {"Etapa": "Día del vuelo", "Actividad": "Liberación aduanal", **dict(zip(['Setup Real (s)', 'TE Real Acum (s)'], agrupar_tiempos(["Inspección del SENIAT", "Cargar camión"], "sum")))},
     {"Etapa": "Día siguiente al vuelo", "Actividad": "Liberación administrativa", **dict(zip(['Setup Real (s)', 'TE Real Acum (s)'], agrupar_tiempos(["Validación del pago de imp.", "Envío de factura digital"], "sum")))}
@@ -113,7 +113,7 @@ def calc_kpi(etapa, factor_guias=1.0):
 
 lt_previo, cap_previo = calc_kpi("Día previo al vuelo")
 lt_vuelo, cap_vuelo = calc_kpi("Día del vuelo")
-lt_sig, cap_sig = calc_kpi("Día siguiente al vuelo", factor_guias=pct_b) # Solo aplica a proporción Anexo B
+lt_sig, cap_sig = calc_kpi("Día siguiente al vuelo", factor_guias=pct_b) # Solo aplica a proporción Tipo B
 
 
 from datetime import datetime, timedelta
@@ -155,7 +155,7 @@ with col2:
     st.markdown(calcular_fin_estimado(hora_vuelo, lt_vuelo, horas_descanso, hora_fin), unsafe_allow_html=True)
 
 with col3:
-    st.success("📄 **DÍA SIGUIENTE (Anexo B)**")
+    st.success("📄 **DÍA SIGUIENTE (Tipo B)**")
     st.metric("Lead Time Estimado", f"{lt_sig:.2f} hrs")
     st.metric("Capacidad Máxima", f"{cap_sig} guías")
     st.markdown(calcular_fin_estimado(hora_inicio, lt_sig, horas_descanso, hora_fin), unsafe_allow_html=True)
